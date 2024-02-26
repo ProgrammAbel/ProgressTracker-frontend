@@ -24,7 +24,7 @@
 
             <span class="fill-space"></span>
             <div *ngIf="!(isHandset$ | async)">
-                <a mat-button routerLink="/kanban" (click)="drawer.close()">📊 Dashboard</a>
+                <a mat-button routerLink="/dashboard" (click)="drawer.close()">📊 Dashboard</a>
                 <a mat-button routerLink="/login" (click)="drawer.close()">🔑 Login</a>
             </div>
         </mat-toolbar>
