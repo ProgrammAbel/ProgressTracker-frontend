@@ -1,16 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { ProgressTrackerApiService } from '../../shared/progress-tracker-api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-account-login',
   templateUrl: './account-login.component.html',
   styleUrl: './account-login.component.scss'
 })
-export class AccountLoginComponent {
+export class AccountLoginComponent implements OnInit{
   form: FormGroup;
 
   type: 'login' | 'signup' = 'signup';
@@ -18,7 +21,7 @@ export class AccountLoginComponent {
 
   serverMessage: string;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private ptApi: ProgressTrackerApiService, private fb: FormBuilder, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -62,6 +65,24 @@ export class AccountLoginComponent {
     }
   }
 
+  createUser(username: string, password: string) {
+    this.ptApi.createUser(username, password).subscribe(response => {
+      this.snackBar.open('Account created successfully', 'OK', {duration: 5000});
+      this.changeType('login');
+    });
+  }
+
+  login(username: string, password: string) {
+    this.ptApi.username = username;
+    this.ptApi.login(username, password).subscribe(response => {
+      this.ptApi.access_token = response.access_token;
+      this.ptApi.isLoggedIn = true;
+    });
+    if (!(this.ptApi.isLoggedIn)) {
+      this.serverMessage = 'Invalid username or password';
+    }
+  }
+  
   async onSubmit() {
     this.loading = true;
 
@@ -71,9 +92,11 @@ export class AccountLoginComponent {
     try {
       if (this.isLogin) {
         // await this.afAuth.signInWithEmailAndPassword(email, password);
+        this.login(username, password);
       }
       if (this.isSignup) {
         // await this.afAuth.createUserWithEmailAndPassword(email, password);
+        this.createUser(username, password);
       }
     } catch (err: any) {
       this.serverMessage = err;

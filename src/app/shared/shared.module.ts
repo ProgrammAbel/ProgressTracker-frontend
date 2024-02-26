@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ShellComponent } from './shell/shell.component';
+import { ProgressTrackerApiService } from './progress-tracker-api.service'
 
 const components = [ShellComponent];
 
@@ -40,6 +41,7 @@ const modules = [
   exports: [
     ...components,
     ...modules
-  ]
+  ],
+  providers: [ProgressTrackerApiService]
 })
 export class SharedModule { }

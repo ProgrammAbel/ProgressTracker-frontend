@@ -1,11 +1,15 @@
-<div *ngIf="true">
-    <h1>Login</h1>
+<div class="content">
+    <div *ngIf="!(ptApi.isLoggedIn)">
+        <h1>Login</h1>
 
-    <app-account-login></app-account-login>
-</div>
+        <app-account-login></app-account-login>
+    </div>
 
-<div *ngIf="false">
-    <p>
-        Logged in as <strong></strong>
-    </p>
+    <div *ngIf="ptApi.isLoggedIn">
+        <p>
+            Logged in as <strong>{{ ptApi.username }}</strong>
+        </p>
+
+        <button mat-stroked-button (click)="ptApi.logout()">Logout</button>
+    </div>
 </div>

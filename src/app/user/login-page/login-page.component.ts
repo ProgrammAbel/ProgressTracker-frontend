@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ProgressTrackerApiService } from '../../shared/progress-tracker-api.service';
 
 @Component({
   selector: 'app-login-page',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrl: './login-page.component.scss'
 })
 export class LoginPageComponent {
+
+  constructor(public ptApi: ProgressTrackerApiService) { }
 
 }
