@@ -14,7 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ShellComponent } from './shell/shell.component';
-import { ProgressTrackerApiService } from './progress-tracker-api.service'
+import { ProgressTrackerApiService } from '../services/progress-tracker-api.service'
 
 const components = [ShellComponent];
 

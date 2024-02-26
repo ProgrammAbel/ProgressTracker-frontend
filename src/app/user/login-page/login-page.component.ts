@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ProgressTrackerApiService } from '../../shared/progress-tracker-api.service';
+import { ProgressTrackerApiService } from '../../services/progress-tracker-api.service';
 
 @Component({
   selector: 'app-login-page',

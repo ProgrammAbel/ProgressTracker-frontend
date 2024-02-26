@@ -5,7 +5,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { ProgressTrackerApiService } from '../../shared/progress-tracker-api.service';
+import { ProgressTrackerApiService } from '../../services/progress-tracker-api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
