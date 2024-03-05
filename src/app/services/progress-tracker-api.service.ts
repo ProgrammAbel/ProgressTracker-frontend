@@ -27,4 +27,11 @@ export class ProgressTrackerApiService {
   logout() {
     this.isLoggedIn = false;
   }
+
+  getOrderedList(subjectId: number): Observable<any> {
+    let httpOptions = {
+      headers: { 'Authorization': `Bearer ${this.access_token}`}
+    };
+    return this.http.get(`http://127.0.0.1:5000/get_ordered_list/${subjectId}`, httpOptions);
+  }
 }

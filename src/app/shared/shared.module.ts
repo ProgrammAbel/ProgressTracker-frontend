@@ -13,8 +13,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
 import { ShellComponent } from './shell/shell.component';
-import { ProgressTrackerApiService } from '../services/progress-tracker-api.service'
 
 const components = [ShellComponent];
 
@@ -32,6 +32,7 @@ const modules = [
   MatFormFieldModule,
   MatInputModule,
   MatSnackBarModule,
+  MatTableModule,
   RouterModule
 ];
 
@@ -42,6 +43,6 @@ const modules = [
     ...components,
     ...modules
   ],
-  providers: [ProgressTrackerApiService]
+  providers: []
 })
 export class SharedModule { }

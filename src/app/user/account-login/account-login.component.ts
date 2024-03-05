@@ -78,6 +78,7 @@ export class AccountLoginComponent implements OnInit{
       this.ptApi.access_token = response.access_token;
       this.ptApi.isLoggedIn = true;
     });
+    console.log(this.ptApi.access_token);
     if (!(this.ptApi.isLoggedIn)) {
       this.serverMessage = 'Invalid username or password';
     }
