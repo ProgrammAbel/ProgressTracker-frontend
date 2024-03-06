@@ -15,6 +15,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { ShellComponent } from './shell/shell.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormsModule } from '@angular/forms';
 
 const components = [ShellComponent];
 
@@ -33,6 +35,7 @@ const modules = [
   MatInputModule,
   MatSnackBarModule,
   MatTableModule,
+  FormsModule,
   RouterModule
 ];
 

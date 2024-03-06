@@ -1,0 +1,7 @@
+<h2>Hi {{ ptApi.username }}</h2>
+<mat-dialog-content>
+    <mat-checkbox [(ngModel)]="selectedSubjects.maths">Maths</mat-checkbox>
+    <mat-checkbox [(ngModel)]="selectedSubjects.computerScience">Computer Science</mat-checkbox>
+    <mat-checkbox [(ngModel)]="selectedSubjects.physics">Physics</mat-checkbox>
+</mat-dialog-content>
+<button mat-raised-button color="primary" (click)="onOkClick()">OK</button>

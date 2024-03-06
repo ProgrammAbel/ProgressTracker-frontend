@@ -14,7 +14,10 @@ mat-form-field {
     margin: 8px 0;;
 }
 
-
+.fill-space {
+  flex: 1 1 100px;
+  flex-direction: column;
+}
 
 input {    
     height: 2em;              

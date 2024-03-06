@@ -34,4 +34,8 @@ export class ProgressTrackerApiService {
     };
     return this.http.get(`http://127.0.0.1:5000/get_ordered_list/${subjectId}`, httpOptions);
   }
+
+  getAllSubjects(): Observable<any> {
+    return this.http.get('http://127.0.0.1:5000/get_all_subjects');
+  }
 }
