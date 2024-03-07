@@ -54,9 +54,6 @@ export class ProgressTrackerApiService {
 
     console.log(data);
 
-    this.http.post('http://127.0.0.1:5000/create_user_subject', data, httpOptions).subscribe(response => {
-      console.log(response);
-    })
 
     // Define a recursive function to handle the loop
     const processSubject = (index: number) => {
@@ -91,8 +88,11 @@ export class ProgressTrackerApiService {
       });
     }
 
+    this.http.post('http://127.0.0.1:5000/create_user_subject', data, httpOptions).subscribe(response => {
+      console.log(response);
+      processSubject(0);
+    })
     // Start processing the subjects
-    processSubject(0);
 
     // for (let i = 0; i < subjectIds.length; i++) {
     //   let subjectId = subjectIds[i]
