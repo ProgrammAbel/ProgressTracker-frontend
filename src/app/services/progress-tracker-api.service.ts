@@ -54,32 +54,72 @@ export class ProgressTrackerApiService {
 
     console.log(data);
 
-    let test = this.http.post('http://127.0.0.1:5000/create_user_subject', data, httpOptions);
-    test.subscribe(response => {
+    this.http.post('http://127.0.0.1:5000/create_user_subject', data, httpOptions).subscribe(response => {
       console.log(response);
     })
 
-    for (let i = 0; i < subjectIds.length; i++) {
-      let subjectId = subjectIds[i]
-      let topicEndpoint = this.http.get(`http://127.0.0.1:5000/get_topics/${subjectId}`);
-      let topics: any[][] = [[]];
-      let subject = {
-        subjectId: subjectId,
-        topics: [] as { topicId: number; topicCompleted: boolean; confidenceLevel: number; lastReviewed: string; }[]
-      };
+    // Define a recursive function to handle the loop
+    const processSubject = (index: number) => {
+      // Check if all subjects have been processed
+      if (index >= subjectIds.length) {
+        return; // Base case: exit recursion
+      }
 
+      let subjectId = subjectIds[index];
+      let topicEndpoint = this.http.get(`http://127.0.0.1:5000/get_topics/${subjectId}`);
+
+      // Subscribe to the HTTP request
       topicEndpoint.subscribe((response: any) => {
-        topics = response.data;
-        subject.topics = topics.map(topic => ({
-          topicId: topic[0],
-          topicCompleted: false,
-          confidenceLevel: 1,
-          lastReviewed: ''
-        }));
-        this.http.post('http://127.0.0.1:5000/add_topic_progress', subject, httpOptions)
+        let topics = response.data;
+        let subject = {
+          subjectId: subjectId,
+          topics: topics.map((topic: any) => ({
+            topicId: topic[0],
+            topicCompleted: false,
+            confidenceLevel: 1,
+            lastReviewed: ''
+          }))
+        };
+
+        // Send the POST request after processing the topics
+        this.http.post('http://127.0.0.1:5000/add_topic_progress', subject, httpOptions).subscribe((response: any) => {
+          console.log(response);
+          
+          // Process the next subject recursively
+          processSubject(index + 1);
+        });
       });
+    }
+
+    // Start processing the subjects
+    processSubject(0);
+
+    // for (let i = 0; i < subjectIds.length; i++) {
+    //   let subjectId = subjectIds[i]
+    //   let topicEndpoint = this.http.get(`http://127.0.0.1:5000/get_topics/${subjectId}`);
+    //   topicEndpoint.subscribe(response => {
+    //     console.log(response);
+    //   });
+    //   let topics: any[][] = [[]];
+    //   let subject = {
+    //     subjectId: subjectId,
+    //     topics: [] as { topicId: number; topicCompleted: boolean; confidenceLevel: number; lastReviewed: string; }[]
+    //   };
+
+    //   topicEndpoint.subscribe((response: any) => {
+    //     topics = response.data;
+    //     subject.topics = topics.map(topic => ({
+    //       topicId: topic[0],
+    //       topicCompleted: false,
+    //       confidenceLevel: 1,
+    //       lastReviewed: ''
+    //     }));
+    //     this.http.post('http://127.0.0.1:5000/add_topic_progress', subject, httpOptions).subscribe(response => {
+    //       console.log(response);
+    //     });
+    //   });
 
       
-    };
+    // };
   }
 }
