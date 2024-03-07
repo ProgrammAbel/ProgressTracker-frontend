@@ -11,10 +11,12 @@ import {
   MatDialogActions,
   MatDialogClose,
 } from '@angular/material/dialog';
+import { SubjectSelectComponent } from './subject-select/subject-select.component';
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    SubjectSelectComponent
   ],
   imports: [
     CommonModule,
