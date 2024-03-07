@@ -36,6 +36,7 @@ const modules = [
   MatSnackBarModule,
   MatTableModule,
   FormsModule,
+  MatCheckboxModule,
   RouterModule
 ];
 

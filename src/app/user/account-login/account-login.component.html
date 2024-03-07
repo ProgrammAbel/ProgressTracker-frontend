@@ -16,9 +16,11 @@
             New user?
         </button>
         </div>
+
+        <br />
   
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <mat-form-field [color]="username?.valid ? 'accent' : 'primary'">
+        <mat-form-field [color]="username?.valid ? 'accent' : 'primary'" hideRequiredMarker>
             <mat-label>Username</mat-label>
             <input
             matInput
@@ -32,7 +34,7 @@
             </mat-error>
         </mat-form-field>
     
-        <mat-form-field [color]="username?.valid ? 'accent' : 'primary'">
+        <mat-form-field [color]="username?.valid ? 'accent' : 'primary'" hideRequiredMarker>
             <mat-label>Password</mat-label>
             <input
             matInput

@@ -7,6 +7,12 @@ import { SnackService } from '../services/snack.service';
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss'
 })
-export class HomePageComponent {
+export class HomePageComponent implements OnInit{
+
+  constructor(public ptApi: ProgressTrackerApiService) { }
+
+  ngOnInit(): void {
+    console.log(this.ptApi.getAllSubjects());
+  }
 
 }
