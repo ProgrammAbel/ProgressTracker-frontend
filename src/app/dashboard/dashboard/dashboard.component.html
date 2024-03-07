@@ -13,7 +13,9 @@
 
         <ng-container matColumnDef="topicCompleted">
             <th mat-header-cell *matHeaderCellDef>Completed?</th>
-            <td mat-cell *matCellDef="let topic">{{ topic.topicCompleted }}</td>
+            <td mat-cell *matCellDef="let topic">
+                <mat-checkbox [checked]="(topic.topicCompleted == 1)"></mat-checkbox>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="confidenceLevel">
@@ -29,7 +31,12 @@
 
         <ng-container matColumnDef="lastReviewed">
             <th mat-header-cell *matHeaderCellDef>Last Reviewed</th>
-            <td mat-cell *matCellDef="let topic">{{ topic.lastReviewed }}</td>
+            <td mat-cell *matCellDef="let topic">
+                <input matInput [value]="topic.lastReviewed">
+                <!-- <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker> -->
+            </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

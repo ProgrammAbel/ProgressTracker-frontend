@@ -18,6 +18,7 @@ import { ShellComponent } from './shell/shell.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 const components = [ShellComponent];
 
@@ -39,6 +40,7 @@ const modules = [
   FormsModule,
   MatCheckboxModule,
   MatSelectModule,
+  MatDatepickerModule,
   RouterModule
 ];
 
