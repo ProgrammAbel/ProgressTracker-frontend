@@ -73,7 +73,7 @@ export class ProgressTrackerApiService {
           topics: topics.map((topic: any) => ({
             topicId: topic[0],
             topicCompleted: false,
-            confidenceLevel: 1,
+            confidenceLevel: 'low',
             lastReviewed: ''
           }))
         };

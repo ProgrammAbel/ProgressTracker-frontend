@@ -6,9 +6,11 @@ import { SubjectSelectDialogComponent } from '../dialogs/subject-select-dialog.c
 import { Observable, of, switchMap } from 'rxjs';
 
 export interface Topic {
-  topicId: string,
-  lastReviewed: string,
-  confidenceLevel: string
+  topicId: number,
+  topicName: string,
+  topicCompleted: string,
+  confidenceLevel: string,
+  lastReviewed: string
 }
 
 @Component({
@@ -18,7 +20,7 @@ export interface Topic {
 })
 export class DashboardComponent implements OnInit {
   topicsArray: Topic[] = [];
-  displayedColumns: string[] = ['topicId', 'lastReviewed', 'confidenceLevel'];
+  displayedColumns: string[] = ['topicId', 'topicName', 'topicCompleted', 'confidenceLevel', 'lastReviewed'];
 
 
   constructor(private ptApi: ProgressTrackerApiService, public dialog: MatDialog) {}
@@ -26,18 +28,20 @@ export class DashboardComponent implements OnInit {
   @ViewChild(MatTable) table: MatTable<Topic>;
 
   ngOnInit(): void {
-    console.log(this.openSubjectSelectDialog());
+    this.openSubjectSelectDialog();
     this.ptApi.getOrderedList(2).subscribe(response => {
-      for (let i = 0; i < response.data.length; i++) {
-        this.topicsArray.push({
-          topicId: response.data[i][0],
-          lastReviewed: response.data[i][1],
-          confidenceLevel: response.data[i][2]
-        });
-      }
+        for (let i = 0; i < response.data.length; i++) {
+          this.topicsArray.push({
+            topicId: response.data[i][0],
+            topicName: response.data[i][1],
+            topicCompleted: response.data[i][2],
+            confidenceLevel: response.data[i][3],
+            lastReviewed: response.data[i][4],
+          });
+        };
+      this.table.renderRows();
     });
     console.log(this.topicsArray);
-    this.table.renderRows();
   }
 
   openSubjectSelectDialog(): void {
