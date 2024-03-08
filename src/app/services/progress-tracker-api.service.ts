@@ -35,12 +35,8 @@ export class ProgressTrackerApiService {
     return this.http.get(`http://127.0.0.1:5000/get_ordered_list/${subjectId}`, httpOptions);
   }
 
-  getAllSubjects(): any[][] {
-    let subjects: any[][] = [];
-    this.http.get('http://127.0.0.1:5000/get_all_subjects').subscribe((response: any) => {
-      subjects = response.data
-    });
-    return subjects;
+  getAllSubjects(): Observable<any> {
+    return this.http.get('http://127.0.0.1:5000/get_all_subjects')
   }
 
   getUserSubjects() {

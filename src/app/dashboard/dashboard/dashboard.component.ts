@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, Inject, ViewChildren, OnInit } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, Inject, ViewChildren, OnInit, QueryList } from '@angular/core';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ProgressTrackerApiService } from '../../services/progress-tracker-api.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -19,28 +19,60 @@ export interface Topic {
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit {
-  topicsArray: Topic[][] = [[]];
+  topicsArray: Topic[][] = [];
   displayedColumns: string[] = ['topicId', 'topicName', 'topicCompleted', 'confidenceLevel', 'lastReviewed'];
+  userSubjects: number[];
+
+  table = [];
+  @ViewChildren('tables') tables: QueryList<MatTable<Topic>>;
 
 
-  constructor(private ptApi: ProgressTrackerApiService, public dialog: MatDialog) {}
+  constructor(public ptApi: ProgressTrackerApiService, public dialog: MatDialog) {}
 
-  @ViewChild(MatTable) table: MatTable<Topic>;
 
   ngOnInit(): void {
-    let userSubjects: number[];
     this.ptApi.getUserSubjects().subscribe((response: any) => {
       if (response.data.length === 0) {
         this.openSubjectSelectDialog();
-        this.table.renderRows();
+        this.renderAll();
       }
-      userSubjects = response.data;
-      this.renderTables(userSubjects!);
+      this.userSubjects = response.data;
+
+      this.userSubjects.forEach(subject => {
+        this.topicsArray.push([]);
+      });
+      this.renderTables(this.userSubjects!);
     });
+  }
+
+  // getSubjectName(subjectIndex: number, subjectName: any = "") {
+  //   if (subjectName !== "") {
+  //     return subjectName;
+  //   }
+
+  //   let subjects: any[][];
+  //   let name: string;
+  //   let subjectId = this.userSubjects[subjectIndex];
+
+  //   this.ptApi.getAllSubjects().subscribe(response => {
+  //     subjects = response.data;
+  //     subjects!.forEach(subject => {
+  //       if (subject[0] === subjectId) {
+  //         name = subject[1]
+  //       }
+  //     })
+  //     this.getSubjectName(subjectIndex, name)      
+  //   })
+  // }
+
+  renderAll() {
+    this.tables.forEach((table: MatTable<Topic>) => table.renderRows());
   }
 
   renderTables(subjectIds: number[], index: number = 0) {
     if (index >= subjectIds.length) {
+      console.log(this.topicsArray);
+      this.renderAll();
       return;
     }
 
@@ -54,7 +86,7 @@ export class DashboardComponent implements OnInit {
           lastReviewed: response.data[i][4],
         });
       };
-      this.table.renderRows();
+      this.renderTables(subjectIds, index + 1);
     });
 
   }
