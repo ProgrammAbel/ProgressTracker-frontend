@@ -19,6 +19,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatTabsModule } from '@angular/material/tabs';
 
 const components = [ShellComponent];
 
@@ -41,6 +42,7 @@ const modules = [
   MatCheckboxModule,
   MatSelectModule,
   MatDatepickerModule,
+  MatTabsModule,
   RouterModule
 ];
 

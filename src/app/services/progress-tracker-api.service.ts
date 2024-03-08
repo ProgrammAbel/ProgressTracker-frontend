@@ -43,6 +43,15 @@ export class ProgressTrackerApiService {
     return subjects;
   }
 
+  getUserSubjects() {
+    let httpOptions = {
+      headers: { 'Authorization': `Bearer ${this.access_token}`}
+    };
+
+    return this.http.get('http://127.0.0.1:5000/get_user_subjects', httpOptions);
+
+  }
+
   addUserSubjects(subjectIds: number[]): any {
     let httpOptions = {
       headers: { 'Authorization': `Bearer ${this.access_token}`}

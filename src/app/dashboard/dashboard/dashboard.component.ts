@@ -19,7 +19,7 @@ export interface Topic {
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit {
-  topicsArray: Topic[] = [];
+  topicsArray: Topic[][] = [[]];
   displayedColumns: string[] = ['topicId', 'topicName', 'topicCompleted', 'confidenceLevel', 'lastReviewed'];
 
 
@@ -28,20 +28,35 @@ export class DashboardComponent implements OnInit {
   @ViewChild(MatTable) table: MatTable<Topic>;
 
   ngOnInit(): void {
-    this.openSubjectSelectDialog();
-    this.ptApi.getOrderedList(2).subscribe(response => {
-        for (let i = 0; i < response.data.length; i++) {
-          this.topicsArray.push({
-            topicId: response.data[i][0],
-            topicName: response.data[i][1],
-            topicCompleted: response.data[i][2],
-            confidenceLevel: response.data[i][3],
-            lastReviewed: response.data[i][4],
-          });
-        };
+    let userSubjects: number[];
+    this.ptApi.getUserSubjects().subscribe((response: any) => {
+      if (response.data.length === 0) {
+        this.openSubjectSelectDialog();
+        this.table.renderRows();
+      }
+      userSubjects = response.data;
+      this.renderTables(userSubjects!);
+    });
+  }
+
+  renderTables(subjectIds: number[], index: number = 0) {
+    if (index >= subjectIds.length) {
+      return;
+    }
+
+    this.ptApi.getOrderedList(subjectIds[index]).subscribe(response => {
+      for (let i = 0; i < response.data.length; i++) {
+        this.topicsArray[index].push({
+          topicId: response.data[i][0],
+          topicName: response.data[i][1],
+          topicCompleted: response.data[i][2],
+          confidenceLevel: response.data[i][3],
+          lastReviewed: response.data[i][4],
+        });
+      };
       this.table.renderRows();
     });
-    console.log(this.topicsArray);
+
   }
 
   openSubjectSelectDialog(): void {
@@ -104,7 +119,6 @@ export class DashboardComponent implements OnInit {
 
         return this.ptApi.addUserSubjects(subjectIds);
       }
-
     });
 
   }
