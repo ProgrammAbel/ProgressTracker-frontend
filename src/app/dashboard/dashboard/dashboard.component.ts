@@ -22,6 +22,7 @@ export class DashboardComponent implements OnInit {
   topicsArray: Topic[][] = [];
   displayedColumns: string[] = ['topicId', 'topicName', 'topicCompleted', 'confidenceLevel', 'lastReviewed'];
   userSubjects: number[];
+  isPriority: boolean = false;
 
   table = [];
   @ViewChildren('tables') tables: QueryList<MatTable<Topic>>;
@@ -34,10 +35,7 @@ export class DashboardComponent implements OnInit {
     this.ptApi.getUserSubjects().subscribe((response: any) => {
       this.userSubjects = response.data;
 
-      this.userSubjects.forEach(subject => {
-        this.topicsArray.push([]);
-      });
-      this.renderTables(this.userSubjects!);
+      this.renderOrderedTables(this.userSubjects!);
     },
     (error: any) => {
       this.openSubjectSelectDialog();
@@ -69,11 +67,16 @@ export class DashboardComponent implements OnInit {
     this.tables.forEach((table: MatTable<Topic>) => table.renderRows());
   }
 
-  renderTables(subjectIds: number[], index: number = 0) {
+  renderOrderedTables(subjectIds: number[], index: number = 0) {
     if (index >= subjectIds.length) {
       console.log(this.topicsArray);
       this.renderAll();
       return;
+    } else if (index === 0) {
+      this.topicsArray = []
+      subjectIds.forEach(subject => {
+        this.topicsArray.push([]);
+      });
     }
 
     this.ptApi.getOrderedList(subjectIds[index]).subscribe(response => {
@@ -86,7 +89,38 @@ export class DashboardComponent implements OnInit {
           lastReviewed: response.data[i][4],
         });
       };
-      this.renderTables(subjectIds, index + 1);
+      this.renderOrderedTables(subjectIds, index + 1);
+    });
+
+  }
+
+  renderPriorityTables(subjectIds: number[], index: number = 0) {
+    if (!this.isPriority) {
+      this.renderOrderedTables(subjectIds);
+      return;
+    }
+    if (index >= subjectIds.length) {
+      console.log(this.topicsArray);
+      this.renderAll();
+      return;
+    } else if (index === 0) {
+      this.topicsArray = [];
+      subjectIds.forEach(subject => {
+        this.topicsArray.push([]);
+      });
+    }
+
+    this.ptApi.getPriorityList(subjectIds[index]).subscribe(response => {
+      for (let i = 0; i < response.data.length; i++) {
+        this.topicsArray[index].push({
+          topicId: response.data[i][0],
+          topicName: response.data[i][1],
+          topicCompleted: response.data[i][2],
+          confidenceLevel: response.data[i][3],
+          lastReviewed: response.data[i][4],
+        });
+      };
+      this.renderPriorityTables(subjectIds, index + 1);
     });
 
   }

@@ -20,6 +20,7 @@ import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTabsModule } from '@angular/material/tabs';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 const components = [ShellComponent];
 
@@ -43,6 +44,7 @@ const modules = [
   MatSelectModule,
   MatDatepickerModule,
   MatTabsModule,
+  MatSlideToggleModule,
   RouterModule
 ];
 

@@ -1,5 +1,6 @@
 <div class="content">
     <h1>Dashboard</h1>
+    <mat-slide-toggle style="float: right;" [(ngModel)]="isPriority" (click)="renderPriorityTables(userSubjects)">Sort by priority</mat-slide-toggle>
     <mat-tab-group mat-stretch-tabs="false">
         <mat-tab *ngFor="let subject of topicsArray; let i = index" [label]="'Subject ' + (i+1)">
             <table #tables mat-table [dataSource]="subject">
