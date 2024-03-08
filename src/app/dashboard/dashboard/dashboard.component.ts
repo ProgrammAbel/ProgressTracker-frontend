@@ -32,16 +32,16 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.ptApi.getUserSubjects().subscribe((response: any) => {
-      if (response.data.length === 0) {
-        this.openSubjectSelectDialog();
-        this.renderAll();
-      }
       this.userSubjects = response.data;
 
       this.userSubjects.forEach(subject => {
         this.topicsArray.push([]);
       });
       this.renderTables(this.userSubjects!);
+    },
+    (error: any) => {
+      this.openSubjectSelectDialog();
+      this.renderAll();
     });
   }
 
