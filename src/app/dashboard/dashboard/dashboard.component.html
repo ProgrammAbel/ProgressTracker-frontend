@@ -1,8 +1,10 @@
 <div class="content">
     <h1>Dashboard</h1>
-    <mat-slide-toggle style="float: right;" [(ngModel)]="isPriority" (click)="renderPriorityTables(userSubjects)">Sort by priority</mat-slide-toggle>
+    <mat-slide-toggle style="float: right;" [(ngModel)]="isPriority" (click)="renderPriorityTables(userSubjects)">
+        Sort by priority
+    </mat-slide-toggle>
     <mat-tab-group mat-stretch-tabs="false">
-        <mat-tab *ngFor="let subject of topicsArray; let i = index" [label]="'Subject ' + (i+1)">
+        <mat-tab *ngFor="let subject of topicsArray; let i = index" [label]="'Subject ' + (i + 1)">
             <table #tables mat-table [dataSource]="subject">
                 <ng-container matColumnDef="topicId">
                     <th mat-header-cell *matHeaderCellDef>Topic Number</th>
@@ -35,10 +37,13 @@
                 <ng-container matColumnDef="lastReviewed">
                     <th mat-header-cell *matHeaderCellDef>Last Reviewed</th>
                     <td mat-cell *matCellDef="let topic">
-                        <input matInput [value]="topic.lastReviewed">
-                        <!-- <mat-hint>MM/DD/YYYY</mat-hint>
-                        <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker> -->
+                        <br/>
+                        <mat-form-field>
+                            <input matInput [value]="topic.lastReviewed" [max]="today" [matDatepicker]="picker">
+                            <mat-hint>MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
                     </td>
                 </ng-container>
 

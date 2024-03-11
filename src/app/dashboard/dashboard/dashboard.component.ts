@@ -23,6 +23,7 @@ export class DashboardComponent implements OnInit {
   displayedColumns: string[] = ['topicId', 'topicName', 'topicCompleted', 'confidenceLevel', 'lastReviewed'];
   userSubjects: number[];
   isPriority: boolean = false;
+  today: Date = new Date()
 
   table = [];
   @ViewChildren('tables') tables: QueryList<MatTable<Topic>>;
@@ -32,6 +33,8 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit(): void {
+    console.log(this.today);
+
     this.ptApi.getUserSubjects().subscribe((response: any) => {
       this.userSubjects = response.data;
 
@@ -51,6 +54,7 @@ export class DashboardComponent implements OnInit {
   //   let subjects: any[][];
   //   let name: string;
   //   let subjectId = this.userSubjects[subjectIndex];
+  //   console.log(subjectId);
 
   //   this.ptApi.getAllSubjects().subscribe(response => {
   //     subjects = response.data;
@@ -59,7 +63,8 @@ export class DashboardComponent implements OnInit {
   //         name = subject[1]
   //       }
   //     })
-  //     this.getSubjectName(subjectIndex, name)      
+  //     console.log(name);
+  //     this.getSubjectName(subjectIndex, name);
   //   })
   // }
 

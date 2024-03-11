@@ -55,6 +55,7 @@ export class ProgressTrackerApiService {
 
   }
 
+
   addUserSubjects(subjectIds: number[]): any {
     let httpOptions = {
       headers: { 'Authorization': `Bearer ${this.access_token}`}
@@ -104,34 +105,5 @@ export class ProgressTrackerApiService {
       console.log(response);
       processSubject(0);
     })
-    // Start processing the subjects
-
-    // for (let i = 0; i < subjectIds.length; i++) {
-    //   let subjectId = subjectIds[i]
-    //   let topicEndpoint = this.http.get(`http://127.0.0.1:5000/get_topics/${subjectId}`);
-    //   topicEndpoint.subscribe(response => {
-    //     console.log(response);
-    //   });
-    //   let topics: any[][] = [[]];
-    //   let subject = {
-    //     subjectId: subjectId,
-    //     topics: [] as { topicId: number; topicCompleted: boolean; confidenceLevel: number; lastReviewed: string; }[]
-    //   };
-
-    //   topicEndpoint.subscribe((response: any) => {
-    //     topics = response.data;
-    //     subject.topics = topics.map(topic => ({
-    //       topicId: topic[0],
-    //       topicCompleted: false,
-    //       confidenceLevel: 1,
-    //       lastReviewed: ''
-    //     }));
-    //     this.http.post('http://127.0.0.1:5000/add_topic_progress', subject, httpOptions).subscribe(response => {
-    //       console.log(response);
-    //     });
-    //   });
-
-      
-    // };
   }
 }

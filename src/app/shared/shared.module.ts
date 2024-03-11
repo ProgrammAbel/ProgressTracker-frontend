@@ -42,7 +42,6 @@ const modules = [
   FormsModule,
   MatCheckboxModule,
   MatSelectModule,
-  MatDatepickerModule,
   MatTabsModule,
   MatSlideToggleModule,
   RouterModule

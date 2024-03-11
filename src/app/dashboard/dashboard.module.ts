@@ -12,6 +12,8 @@ import {
   MatDialogClose,
 } from '@angular/material/dialog';
 import { SubjectSelectDialogComponent } from './dialogs/subject-select-dialog.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { SubjectSelectDialogComponent } from './dialogs/subject-select-dialog.co
     MatDialogContent,
     MatDialogActions,
     MatDialogClose,
-  ]
+    MatDatepickerModule,
+  ],
+  providers: [provideNativeDateAdapter()]
 })
 export class DashboardModule { }
