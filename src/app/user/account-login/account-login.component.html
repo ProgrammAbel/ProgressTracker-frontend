@@ -20,7 +20,7 @@
         <br />
   
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <mat-form-field [color]="username?.valid ? 'accent' : 'primary'" hideRequiredMarker>
+        <mat-form-field [color]="username?.valid ? 'accent' : 'primary'" hideRequiredMarker appearance="outline">
             <mat-label>Username</mat-label>
             <input
             matInput
@@ -34,7 +34,7 @@
             </mat-error>
         </mat-form-field>
     
-        <mat-form-field [color]="username?.valid ? 'accent' : 'primary'" hideRequiredMarker>
+        <mat-form-field [color]="username?.valid ? 'accent' : 'primary'" hideRequiredMarker appearance="outline">
             <mat-label>Password</mat-label>
             <input
             matInput
@@ -51,6 +51,7 @@
         <mat-form-field
             [color]="passwordDoesMatch ? 'accent' : 'warn'"
             *ngIf="isSignup"
+            appearance="outline"
         >
             <mat-label>Confirm Password</mat-label>
             <input

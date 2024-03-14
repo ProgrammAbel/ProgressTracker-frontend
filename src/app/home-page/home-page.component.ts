@@ -11,8 +11,6 @@ export class HomePageComponent implements OnInit{
 
   constructor(public ptApi: ProgressTrackerApiService) { }
 
-  ngOnInit(): void {
-    console.log(this.ptApi.getAllSubjects());
-  }
+  ngOnInit(): void { }
 
 }

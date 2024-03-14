@@ -33,10 +33,10 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log(this.today);
 
     this.ptApi.getUserSubjects().subscribe((response: any) => {
       this.userSubjects = response.data;
+      console.log(this.userSubjects);
 
       this.renderOrderedTables(this.userSubjects!);
     },
@@ -46,27 +46,30 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  // getSubjectName(subjectIndex: number, subjectName: any = "") {
-  //   if (subjectName !== "") {
-  //     return subjectName;
-  //   }
+  getSubjectId(subjectIndex: number): number {
+    let subjects: any[][];
+    let name: string;
+    let subjectId = this.userSubjects[subjectIndex];
 
-  //   let subjects: any[][];
-  //   let name: string;
-  //   let subjectId = this.userSubjects[subjectIndex];
-  //   console.log(subjectId);
+    return subjectId;
+  }
 
-  //   this.ptApi.getAllSubjects().subscribe(response => {
-  //     subjects = response.data;
-  //     subjects!.forEach(subject => {
-  //       if (subject[0] === subjectId) {
-  //         name = subject[1]
-  //       }
-  //     })
-  //     console.log(name);
-  //     this.getSubjectName(subjectIndex, name);
-  //   })
-  // }
+  getSubjectName(subjectIndex: number) {
+    let subjectId = this.getSubjectId(subjectIndex);
+
+    return (this.ptApi.allSubjects as any)[subjectId];
+
+    // this.ptApi.getAllSubjects().subscribe(response => {
+    //   subjects = response.data;
+    //   subjects!.forEach(subject => {
+    //     if (subject[0] === subjectId) {
+    //       name = subject[1]
+    //     }
+    //   })
+    //   console.log(name);
+    //   this.getSubjectName(subjectIndex, name);
+    // })
+  }
 
   renderAll() {
     this.tables.forEach((table: MatTable<Topic>) => table.renderRows());
@@ -74,7 +77,6 @@ export class DashboardComponent implements OnInit {
 
   renderOrderedTables(subjectIds: number[], index: number = 0) {
     if (index >= subjectIds.length) {
-      console.log(this.topicsArray);
       this.renderAll();
       return;
     } else if (index === 0) {
@@ -99,13 +101,48 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  updateUserTopic(topic: any, value: any, subjectId: number) {
+    let requestData: {subjectId: number; topics: Topic[]} = {
+      "subjectId": subjectId,
+      "topics": []
+    }
+
+    switch (typeof value) {
+      case 'boolean':
+        topic.topicCompleted = value;
+        break;
+      
+      case 'string':
+        topic.confidenceLevel = value;
+        break;
+      
+      default:
+        topic.lastReviewed = value.toISOString().substring(0, 10);
+        break;
+    }
+
+    requestData.topics.push(topic);
+
+    this.ptApi.updateUserTopic(requestData);
+  }
+
+  // testTopicFunction(topic: any, value: any) {
+  //   console.log('value:' + value);
+  //   console.log(`
+  //     topicId: ${topic.topicId}
+  //     topicName: ${topic.topicName}
+  //     topicCompleted: ${topic.topicCompleted}
+  //     confidenceLevel: ${topic.confidenceLevel}
+  //     lastReviewed: ${topic.lastReviewed}`
+  //   );
+  // }
+
   renderPriorityTables(subjectIds: number[], index: number = 0) {
     if (!this.isPriority) {
       this.renderOrderedTables(subjectIds);
       return;
     }
     if (index >= subjectIds.length) {
-      console.log(this.topicsArray);
       this.renderAll();
       return;
     } else if (index === 0) {

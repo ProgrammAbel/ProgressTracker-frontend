@@ -12,6 +12,12 @@ export class ProgressTrackerApiService {
 
   username: string;
 
+  allSubjects = {
+    1: 'Mathematics',
+    2: 'Computer Science',
+    3: 'Physics'
+  };
+
   constructor(private http: HttpClient) { }
 
   createUser(username: string, password: string): Observable<any> {
@@ -55,6 +61,17 @@ export class ProgressTrackerApiService {
 
   }
 
+  updateUserTopic(data: object) {
+    let httpOptions = {
+      headers: { 'Authorization': `Bearer ${this.access_token}`}
+    };
+    console.log(data);
+
+    this.http.put('http://127.0.0.1:5000/update_topic_progress', data, httpOptions).subscribe(response => {
+      console.log(response);
+    });
+  }
+
 
   addUserSubjects(subjectIds: number[]): any {
     let httpOptions = {
@@ -65,7 +82,6 @@ export class ProgressTrackerApiService {
       subjectIds: [...subjectIds]
     };
 
-    console.log(data);
 
 
     // Define a recursive function to handle the loop
@@ -93,7 +109,6 @@ export class ProgressTrackerApiService {
 
         // Send the POST request after processing the topics
         this.http.post('http://127.0.0.1:5000/add_topic_progress', subject, httpOptions).subscribe((response: any) => {
-          console.log(response);
           
           // Process the next subject recursively
           processSubject(index + 1);
@@ -102,7 +117,6 @@ export class ProgressTrackerApiService {
     }
 
     this.http.post('http://127.0.0.1:5000/create_user_subject', data, httpOptions).subscribe(response => {
-      console.log(response);
       processSubject(0);
     })
   }
