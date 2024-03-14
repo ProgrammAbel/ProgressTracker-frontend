@@ -1,10 +1,15 @@
 <div class="content">
     <h1>Dashboard</h1>
-    <button mat-raised-button >Revise</button>
+
+    <button class="reviseButton" mat-fab extended>
+        <mat-icon>edit</mat-icon>
+        Revise
+    </button>
 
     <mat-slide-toggle style="float: right;" [(ngModel)]="isPriority" (click)="renderPriorityTables(userSubjects)">
         Sort by priority
     </mat-slide-toggle>
+    <br>
     <mat-tab-group mat-stretch-tabs="false">
         <mat-tab *ngFor="let subject of topicsArray; let i = index" [label]="getSubjectName(i)">
             <table #tables mat-table [dataSource]="subject">
