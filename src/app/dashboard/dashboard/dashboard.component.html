@@ -7,7 +7,7 @@
 </div>
 <br>
 <div class="content" >
-    <mat-tab-group style="z-index: -100;"mat-stretch-tabs="false">
+    <mat-tab-group style="z-index: -100;" mat-stretch-tabs="false">
         <mat-tab *ngFor="let subject of topicsArray; let i = index" [label]="getSubjectName(i)">
             <table #tables mat-table [dataSource]="subject">
                 <ng-container matColumnDef="topicId">
@@ -47,7 +47,7 @@
                             <input matInput (dateChange)="updateUserTopic(topic, $event.target.value, getSubjectId(i))" [value]="topic.lastReviewed" [max]="today" [matDatepicker]="picker" >
                             <mat-hint>DD/MM/YYYY</mat-hint>
                             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker ></mat-datepicker>
+                            <mat-datepicker #picker [touchUi]="(isHandset$ | async) ? 'true' : 'false'"></mat-datepicker>
                         </mat-form-field>
                     </td>
                 </ng-container>

@@ -4,6 +4,8 @@ import { ProgressTrackerApiService } from '../../services/progress-tracker-api.s
 import { MatDialog } from '@angular/material/dialog';
 import { SubjectSelectDialogComponent } from '../dialogs/subject-select-dialog.component';
 import { Observable, of, switchMap } from 'rxjs';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { map, shareReplay } from 'rxjs/operators';
 
 export interface Topic {
   topicId: number,
@@ -24,12 +26,17 @@ export class DashboardComponent implements OnInit {
   userSubjects: number[];
   isPriority: boolean = false;
   today: Date = new Date()
-
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe([Breakpoints.Handset])
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
+  
   table = [];
   @ViewChildren('tables') tables: QueryList<MatTable<Topic>>;
 
 
-  constructor(public ptApi: ProgressTrackerApiService, public dialog: MatDialog) {}
+  constructor(private breakpointObserver: BreakpointObserver, public ptApi: ProgressTrackerApiService, public dialog: MatDialog) {}
 
 
   ngOnInit(): void {
